@@ -78,7 +78,7 @@ for booking in newBookings:
     for charge in booking.findAll("Charge"):
         code = charge.get("ViolationCode")
         if code not in CHARGES:
-            newCharges += [code]
+            newCharges.add(code)
         str += "  * %s (%s)\n" % (CHARGES.get(code, "Unknown"), code)
     if booking.ScheduledEvent:
         type = booking.ScheduledEvent.get("type")
