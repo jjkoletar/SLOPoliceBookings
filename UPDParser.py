@@ -90,6 +90,7 @@ for booking in newBookings:
 
 if newCharges:
     str = "New Charges: " + ", ".join(newCharges)
+    notifyList += [str]
 
 if not notifyList:
     # Nothing new today. Don't bother people with an email.
