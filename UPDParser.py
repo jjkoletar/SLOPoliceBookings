@@ -15,7 +15,7 @@ CHARGES = {
     # California Penal Code
     "647(F) PC": "Drunk in Public",
     "69 PC": "Resisting an Officer",
-    "148(A)(1) PC": "Obstruction of Justice",
+    "148(A)(1) PC": "Resisting Arrest/Obstruction of Justice",
     "978.5 PC": "Failure to Appear",
     "290.011(A) PC": "Failure to Register as a Sex Offender",
     "1203.2 PC": "Violation of Probation",
