@@ -2,6 +2,7 @@ import requests
 import os.path
 import pickle
 import pyzmail
+import subprocess
 from bs4 import BeautifulSoup
 
 CHARGES = {
@@ -97,9 +98,13 @@ if not notifyList:
     print "Nothing new."
     exit(0)
 
+# Make a datestamp using /bin/date. Sue me :)
+binDate = subprocess.Popen(['date', '+%m/%d/%Y'], stdout=subprocess.PIPE)
+datestamp, _ = binDate.communicate()
+
 sender = ('UPD Bot', 'noreply@jjkoletar.com')
 recipients = SUBSCRIBERS.items()
-subject = u'UPD Booking Log'
+subject = u'UPD Booking Log for %s' % datestamp.strip()
 text_content = "\n\n".join(notifyList)
 prefered_encoding='iso-8859-1'
 text_encoding='iso-8859-1'
