@@ -13,20 +13,26 @@ CHARGES = {
     "11350 HS": "Possession of a Controlled Substance",
 
     # California Penal Code
+    "484(A) PC": "Petty Theft/Larceny",
     "647(F) PC": "Drunk in Public",
     "69 PC": "Resisting an Officer",
     "148(A)(1) PC": "Resisting Arrest/Obstruction of Justice",
-    "978.5 PC": "Failure to Appear",
+    "243(D) PC": "Battery w/Serious Injury",
     "290.011(A) PC": "Failure to Register as a Sex Offender",
+    "978.5 PC": "Failure to Appear",
     "1203.2 PC": "Violation of Probation",
 
     # California Vehicle Code
+    "5200 VC": "Display of License Plates",
+    "12500(A) VC": "Driving w/o a License",
+    "14601.1(A) VC": "Driving w/Suspended License",
     "23152 VC": "DUI (general)",
     "23152(A) VC": "DUI (alcohol)",
     "23152(B) VC": "DUI, >0.08 BAC",
     "23152(E) VC": "DUI (drug)",
     "23224(A) VC": "Minor Driving w/Alcohol",
     "22450 VC": "Failure to Stop at a Stop Sign",
+    "40515 VC": "Failure to Appear wrt Promise to Appear/Continuance",
 }
 
 SUBSCRIBERS = {}
@@ -40,8 +46,6 @@ with open("subscribers", "r") as subscribers:
 logData = requests.get("http://www.slosheriff.org/WebLogs/BookingLog/Data/WebBookingLog.xml").text
 
 tree = BeautifulSoup(logData, "lxml-xml")
-
-charges = tree.findAll(Agency="CPPD")
 
 if not os.path.isfile("previous_bookings"):
     # Skip unpickling the old set and just establish an empty one
@@ -96,6 +100,10 @@ if newCharges:
 if not notifyList:
     # Nothing new today. Don't bother people with an email.
     print "Nothing new."
+    exit(0)
+
+if len(SUBSCRIBERS) == 0:
+    print "\n\n".join(notifyList)
     exit(0)
 
 # Make a datestamp using /bin/date. Sue me :)
