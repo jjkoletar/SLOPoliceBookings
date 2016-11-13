@@ -5,35 +5,92 @@ import pyzmail
 import subprocess
 from bs4 import BeautifulSoup
 
+# Shout-out to the very helpful Sergeant Tony Perry of the SLO County Sheriff's Office for
+# his help decoding the agency codes.
+AGENCIES = {
+    "AGPD": "Arroyo Grande PD",
+    "ASHP": "??",
+    "ATPD": "Atascadero PD",
+    "BAIL": "??Court Bailiffs?",
+    "CAPO": "California Department of Parks and Recreation: Oceano",
+    "CAPR": "California Department of Parks and Recreation: San Luis Obispo",
+    "CHPD": "CHP Coastal Division Headquarters",
+    "CHPS": "CHP San Luis Obispo",
+    "CHPT": "CHP Templeton",
+    "CMC":  "??",
+    "COURT":"??",
+    "CPPD": "Cal Poly University PD",
+    "DA":   "District Attorney",
+    "GBPD": "Grover Beach PD",
+    "MBPD": "Morro Bay PD",
+    "OTHR": "Other Agency",
+    "PBPD": "Pismo Beach PD",
+    "PROB": "SLO Probation Officers",
+    "PRPD": "Paso Robles PD",
+    "SLPD": "San Luis Obispo PD",
+    "SLSO": "San Luis Obispo County Sheriff's Office",
+    "SPAR": "??",
+}
+
 CHARGES = {
     # California Business & Professional Code
+    "25661(A) BP": "Minor in Possession of a False ID",
     "25662(A) BP": "Minor in Possession",
 
     # California Health & Safety Code
     "11350 HS": "Possession of a Controlled Substance",
+    "11357(B) HS": "Possession of <1 oz Marijuana",
+    "11364(A) HS": "Possession of Paraphernalia",
+    "11377(A) HS": "Misdemeanor - Possession of a Controlled Substance",
+    "11550 HS": "Use/Under Influence of Controlled Substance",
+    "11550(A) HS": "Under the Influence of a Controlled Substance",
 
     # California Penal Code
-    "484(A) PC": "Petty Theft/Larceny",
-    "647(F) PC": "Drunk in Public",
     "69 PC": "Resisting an Officer",
+    "148(A) PC": "Obstructs/Resists Public Officer, etc.",
     "148(A)(1) PC": "Resisting Arrest/Obstruction of Justice",
+    "148.9(A) PC": "False Identification to Peace Officer",
+    "166(C)(4) PC": "Violation of Protective Order w/Prior",
+    "186.22(A) PC": "FELONY - PARTICIPATE IN CRIMINAL STREET GANG",
     "243(D) PC": "Battery w/Serious Injury",
+    "245(A)(1) PC": "FELONY - ASSAULT W/DEADLY WEAPON OTHER THAN FIREARM OR GBI",
+    "272(A)(1) PC": "Contribute to the Deliquency of a Minor",
+    "273.5 PC": "INFLICT CORPORAL INJURY ON SPOUSE/COHABITANT",
     "290.011(A) PC": "Failure to Register as a Sex Offender",
-    "978.5 PC": "Failure to Appear",
+    "311.11(A) PC": "OBS - POSSESS/ETC MATTER DEPICTING MINOR UNDER 14 IN SEX",
+    "368(B)(1) PC": "Felony Elder Abuse w/GBI",
+    "459 PC": "Burglary",
+    "484(A) PC": "Petty Theft/Larceny",
+    "537E(A) PC": "MISDEMEANOR - BUY/SELL ARTICLES WITH IDENTIFICATION REMOVED",
+    "647(F) PC": "Drunk in Public",
+    "664/211 PC": "Attempted Robbery",
+    "853.8 PC": "Failure to Appear (Promise to Appear)",
+    "978.5 PC": "Felony Failure to Appear (Bench Warrant)",
     "1203.2 PC": "Violation of Probation",
+    "1203.2(A) PC": "Revocation of Probation Rearrest",
+    "3056 PC": "Violation of Parole",
+    "3455(A) PC": "Violation of Post Release Supervision",
+    "3455(B)(1) PC": "Violation of Post Release Community Supervision",
+    "4573 PC": "Bringing Narcotics to a Prisoner",
+    "4574(A) PC": "WEAPON/TEAR GAS OFFENSE:PRISON/JAIL/ETC",
+    "29800(A)(1) PC": "Felon in Possession of a Firearm",
 
     # California Vehicle Code
     "5200 VC": "Display of License Plates",
     "12500(A) VC": "Driving w/o a License",
     "14601.1(A) VC": "Driving w/Suspended License",
+    "14601.2(A) VC": "Driving w/Suspended License, Under The Influence related",
+    "20002(A) VC": "HIT-RUN, PROPERTY DAMAGE, INCLUDING VEHICLES",
+    "22450 VC": "Failure to Stop at a Stop Sign",
     "23152 VC": "DUI (general)",
     "23152(A) VC": "DUI (alcohol)",
     "23152(B) VC": "DUI, >0.08 BAC",
-    "23152(E) VC": "DUI (drug)",
+    "23152(E) VC": "DUI (drug), first offense",
     "23224(A) VC": "Minor Driving w/Alcohol",
-    "22450 VC": "Failure to Stop at a Stop Sign",
+    "22349(A) VC": "Exceeding the Posted Speed Limit",
     "40515 VC": "Failure to Appear wrt Promise to Appear/Continuance",
 }
+
 
 SUBSCRIBERS = {}
 with open("subscribers", "r") as subscribers:
