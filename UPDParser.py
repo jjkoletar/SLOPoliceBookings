@@ -52,6 +52,7 @@ CHARGES = {
     "148.9(A) PC": "False Identification to Peace Officer",
     "166(C)(4) PC": "Violation of Protective Order w/Prior",
     "186.22(A) PC": "FELONY - PARTICIPATE IN CRIMINAL STREET GANG",
+    "243(B) PC": "BATTERY ON PEACE OFFICER/EMERGENCY PERSONNEL/ETC",
     "243(D) PC": "Battery w/Serious Injury",
     "245(A)(1) PC": "FELONY - ASSAULT W/DEADLY WEAPON OTHER THAN FIREARM OR GBI",
     "272(A)(1) PC": "Contribute to the Deliquency of a Minor",
@@ -61,6 +62,7 @@ CHARGES = {
     "368(B)(1) PC": "Felony Elder Abuse w/GBI",
     "459 PC": "Burglary",
     "484(A) PC": "Petty Theft/Larceny",
+    "496D(A) PC": "FELONY - VEH/TRAILER CONST EQUIP KNOWN TO BE STOLEN",
     "537E(A) PC": "MISDEMEANOR - BUY/SELL ARTICLES WITH IDENTIFICATION REMOVED",
     "647(F) PC": "Drunk in Public",
     "664/211 PC": "Attempted Robbery",
@@ -77,6 +79,7 @@ CHARGES = {
 
     # California Vehicle Code
     "5200 VC": "Display of License Plates",
+    "10851(A) VC": "FELONY - AUTO THEFT, PERMNNTLY/TEMP DEPRIVE OWNER OF POSS",
     "12500(A) VC": "Driving w/o a License",
     "14601.1(A) VC": "Driving w/Suspended License",
     "14601.2(A) VC": "Driving w/Suspended License, Under The Influence related",
